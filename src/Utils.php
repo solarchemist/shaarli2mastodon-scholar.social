@@ -10,8 +10,8 @@ class Utils_scholarsocial {
    */
   public static function isConfigValid ($conf) {
     $mandatory = array(
-      'MASTODON_INSTANCE',
-      'MASTODON_APPTOKEN',
+      'SCHOLARSOCIAL_INSTANCE',
+      'SCHOLARSOCIAL_APPTOKEN',
     );
     foreach ($mandatory as $value) {
       $setting = $conf->get('plugins.'. $value);

@@ -25,7 +25,7 @@ require_once 'src/Utils.php';
 /**
  * The default toot format if none is specified.
  */
-const TOOT_DEFAULT_FORMAT = '#Shaarli: ${title} ${url} ${tags}';
+const SCHOLARSOCIAL_DEFAULT_FORMAT = '#Shaarli: ${title} ${url} ${tags}';
 
 const DIRECTORY_PATH = __DIR__;
 
@@ -37,9 +37,9 @@ const DIRECTORY_PATH = __DIR__;
  * @return array|void Error if config is not valid.
  */
 function s2m_scholarsocial_init ($conf) {
-    $format = $conf->get('plugins.MASTODON_TOOT_FORMAT');
+    $format = $conf->get('plugins.SCHOLARSOCIAL_TOOT_FORMAT');
     if (empty($format)) {
-        $conf->set('plugins.MASTODON_TOOT_FORMAT', TOOT_DEFAULT_FORMAT);
+        $conf->set('plugins.SCHOLARSOCIAL_TOOT_FORMAT', SCHOLARSOCIAL_DEFAULT_FORMAT);
     }
 
     if (!Utils_scholarsocial::isConfigValid($conf)) {
@@ -91,7 +91,7 @@ function hook_s2m_scholarsocial_save_link ($data, $conf) {
     // We make sure not to alter data
     $link = array_merge(array(), $data);
     $tagsSeparator = $conf->get('general.tags_separator', ' ');
-    $maxLength = intval($conf->get('plugins.MASTODON_TOOT_MAX_LENGTH'));
+    $maxLength = intval($conf->get('plugins.SCHOLARSOCIAL_TOOT_MAX_LENGTH'));
 
     $data['permalink'] = index_url($_SERVER) . 'shaare/' . $data['shorturl'];
 
@@ -100,10 +100,10 @@ function hook_s2m_scholarsocial_save_link ($data, $conf) {
         $data['url'] = $data['permalink'];
     }
 
-    $format = isset($_POST['toot-format']) ? $_POST['toot-format'] : $conf->get('plugins.MASTODON_TOOT_FORMAT', TOOT_DEFAULT_FORMAT);
+    $format = isset($_POST['toot-format']) ? $_POST['toot-format'] : $conf->get('plugins.SCHOLARSOCIAL_TOOT_FORMAT', SCHOLARSOCIAL_DEFAULT_FORMAT);
     $toot = new Toot_scholarsocial($data, $format, $tagsSeparator, $maxLength);
-    $mastodonInstance = $conf->get('plugins.MASTODON_INSTANCE', false);
-    $appToken = $conf->get('plugins.MASTODON_APPTOKEN', false);
+    $mastodonInstance = $conf->get('plugins.SCHOLARSOCIAL_INSTANCE', false);
+    $appToken = $conf->get('plugins.SCHOLARSOCIAL_APPTOKEN', false);
 
     $mastodonClient = new MastodonClient_scholarsocial($mastodonInstance, $appToken);
     $response = $mastodonClient->postStatus($toot);
@@ -147,9 +147,9 @@ function hook_s2m_scholarsocial_render_editlink ($data, $conf) {
       '##is-note##',
     ], [
       $checked ? 'checked="checked"' : '',
-      $conf->get('plugins.MASTODON_TOOT_FORMAT', TOOT_DEFAULT_FORMAT),
+      $conf->get('plugins.SCHOLARSOCIAL_TOOT_FORMAT', SCHOLARSOCIAL_DEFAULT_FORMAT),
       uniqid(),
-      $conf->get('plugins.MASTODON_TOOT_MAX_LENGTH'),
+      $conf->get('plugins.SCHOLARSOCIAL_TOOT_MAX_LENGTH'),
       $conf->get('general.tags_separator', ' '),
       Utils_scholarsocial::isLinkNote($data['link']) ? 'true' : 'false',
     ], $html);
