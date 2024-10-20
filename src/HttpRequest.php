@@ -1,7 +1,7 @@
 <?php
 
 /**
- * HttpRequest
+ * HttpRequest_scholarsocial
  *
  * @author Maxence Cauderlier
  * @link http://max-koder.fr
@@ -12,10 +12,10 @@
  */
 
 /**
- * HttpRequest is a way to do http requests and get responses
+ * HttpRequest_scholarsocial is a way to do http requests and get responses
  */
 
-class HttpRequest {
+class HttpRequest_scholarsocial {
 
   /**
    * Mastodon API URL

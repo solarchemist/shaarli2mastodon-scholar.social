@@ -1,5 +1,5 @@
 <?php
-class Utils {
+class Utils_scholarsocial {
 
   /**
    * Determines whether the configuration is valid or not.
